@@ -1,0 +1,14 @@
+micronaut:
+  application:
+    name: micronaut-examples
+  caches:
+    external-api-cache:
+      maximumSize: 20
+      expire-after-access: 10s
+      expire-after-write: 10s
+endpoints:
+  all:
+    enabled: true
+    sensitive: false
+
+exchange.api.url: https://api.exchangeratesapi.io
