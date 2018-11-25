@@ -1,12 +1,13 @@
 package example.micronaut
 
-
 import example.micronaut.ExchangeRateRequest
 import example.micronaut.ExchangeRateResponse
 import example.micronaut.mocks.MockExchangeRateApiClient
 import io.micronaut.context.ApplicationContext
 import io.micronaut.http.HttpRequest
+import io.micronaut.http.HttpStatus
 import io.micronaut.http.client.RxHttpClient
+import io.micronaut.http.client.exceptions.HttpClientResponseException
 import io.micronaut.runtime.server.EmbeddedServer
 import spock.lang.AutoCleanup
 import spock.lang.Shared
@@ -41,6 +42,24 @@ class ExchangeRateControllerSpec extends Specification {
         'EUR'        | 'USD'      | 100
         'EUR'        | 'EUR'      | 100
         'USD'        | 'EUR'      | 100
+    }
+
+    @Unroll
+    def "bad request thrown"() {
+
+        def rateReq = new ExchangeRateRequest(fromCurr, "EUR", 100)
+        when:
+        HttpRequest request = HttpRequest.POST('/api/convert', rateReq)
+        client.toBlocking().exchange(request, ExchangeRateResponse.class)
+
+        then:
+        def ex = thrown(HttpClientResponseException.class)
+        ex.status == status
+
+        where:
+        fromCurr                                      || status
+        MockExchangeRateApiClient.BAD__REQUEST        || HttpStatus.BAD_REQUEST
+        MockExchangeRateApiClient.SERVICE_UNAVAILABLE || HttpStatus.SERVICE_UNAVAILABLE
     }
 
 }
