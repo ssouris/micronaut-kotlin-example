@@ -4,7 +4,7 @@ import io.micronaut.http.annotation.Get
 import io.micronaut.http.client.annotation.Client
 import io.reactivex.Flowable
 
-@Client("\${exchange.api.url}")
+@Client("exchangeratesapi")
 interface ExchangeRateApiClient : ExchangeRateApi
 
 interface ExchangeRateApi {

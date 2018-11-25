@@ -9,7 +9,7 @@
     </appender>
 
 
-    <!--<logger name="io.micronaut" level="TRACE"/>-->
+    <!--<logger name="io.micronaut.client" level="TRACE"/>-->
     <!--<logger name="io.micronaut.context" level="DEBUG"/>-->
 
     <root level="info">

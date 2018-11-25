@@ -6,9 +6,20 @@ micronaut:
       maximumSize: 20
       expire-after-access: 10s
       expire-after-write: 10s
+  http:
+    services:
+      exchangeratesapi:
+        #        read-timeout: 1s
+        #        connect-timeout: 1s
+        followRedirects: false
+        pool:
+          enabled: true
+        urls:
+          - https://api.exchangeratesapi.io
+
+# Management API
 endpoints:
   all:
     enabled: true
     sensitive: false
 
-exchange.api.url: https://api.exchangeratesapi.io
